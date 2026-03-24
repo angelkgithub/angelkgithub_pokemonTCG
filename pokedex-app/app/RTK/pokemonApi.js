@@ -9,37 +9,52 @@ export const pokemonApi = createApi({
     baseUrl: 'https://api.pokemontcg.io/v2/',
   }),
   endpoints: (builder) => ({
-    // Paginated cards with search support
+    // Paginated cards with GLOBAL search support
+    // ✅ Searches across ALL cards in the API, not just current page
+    // ✅ Uses Pokemon TCG API query format: q=name:search*
+    // ✅ Supports partial matching (e.g., "char" → charizard, charmeleon)
     getCards: builder.query({
       query: ({ page = 1, searchQuery = '' } = {}) => {
         let url = `cards?pageSize=${CARDS_PER_PAGE}&page=${page}`;
-        if (searchQuery) {
-          url += `&q=${encodeURIComponent(searchQuery)}`;
+        
+        // Build query string for global search
+        if (searchQuery && searchQuery.trim()) {
+          // Use Pokemon TCG API query syntax: q=name:searchTerm*
+          // The asterisk enables partial matching
+          // Examples: "charizard" → "name:charizard*"
+          //           "char" → "name:char*"
+          const queryString = `name:${searchQuery.trim()}*`;
+          url += `&q=${encodeURIComponent(queryString)}`;
         }
+        
         return url;
       },
-      // Keep previous data while new data is loading (better UX)
+      // Serialize to ensure proper caching behavior
       serializeQueryArgs: ({ queryArgs }) => {
         return {
           searchQuery: queryArgs?.searchQuery || '',
           page: queryArgs?.page || 1,
         };
       },
+      // Merge results properly
       merge: (currentCache, newItems) => {
-        // Merge paginated results
         if (newItems.data) {
           return newItems;
         }
         return currentCache;
       },
     }),
-    // Prefetch next page (called automatically)
+    // Prefetch next page for smooth navigation
     getPrefetchCards: builder.query({
       query: ({ page, searchQuery = '' } = {}) => {
         let url = `cards?pageSize=${CARDS_PER_PAGE}&page=${page}`;
-        if (searchQuery) {
-          url += `&q=${encodeURIComponent(searchQuery)}`;
+        
+        // Same query format as getCards for consistency
+        if (searchQuery && searchQuery.trim()) {
+          const queryString = `name:${searchQuery.trim()}*`;
+          url += `&q=${encodeURIComponent(queryString)}`;
         }
+        
         return url;
       },
     }),
