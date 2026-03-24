@@ -3,15 +3,16 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
-    { href: '/cards', label: 'Cards' },
-    { href: '/deck', label: 'Deck' },
-    { href: '/collection', label: 'Collection' },
+    { href: '/cards', label: '' },
+    { href: '/deck', label: '' },
+    { href: '/collection', label: '' },
   ];
 
   const isActive = (href) => pathname === href;
@@ -20,17 +21,21 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 shadow-lg border-b border-slate-700/50 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          {/* Logo - Pokémon Ball */}
           <Link 
             href="/" 
             className="flex items-center gap-2 group"
           >
-            <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300">
-              <span className="text-white font-bold text-lg">P</span>
+            <div className="w-12 h-12 relative">
+              <Image
+                src="/ball.png"
+                alt="Pokémon Logo"
+                width={48}
+                height={48}
+                priority
+                className="object-contain"
+              />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent hidden sm:inline">
-              Pokédex
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -47,7 +52,7 @@ export default function Navbar() {
               >
                 {link.label}
                 {isActive(link.href) && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-400 rounded-full" />
                 )}
               </Link>
             ))}
@@ -79,7 +84,7 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden pb-4 space-y-2 border-t border-slate-700/50 pt-4">
+          <div className="md:hidden pb-4 space-y-2 border-t border-slate-700 pt-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -87,8 +92,8 @@ export default function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-2 rounded-lg transition-all duration-300 ${
                   isActive(link.href)
-                    ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 font-medium'
-                    : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                    ? 'bg-blue-900/40 text-blue-400 font-medium border border-blue-500/30'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-700'
                 }`}
               >
                 {link.label}

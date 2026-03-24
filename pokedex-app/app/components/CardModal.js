@@ -46,7 +46,7 @@ export default function CardModal({ card, isOpen, onClose }) {
           <div className="grid md:grid-cols-2 gap-6 p-6 md:p-8">
             {/* Left: Large Image */}
             <div className="flex flex-col gap-4">
-              <div className="relative bg-gradient-to-br from-slate-700 to-slate-900 rounded-2xl overflow-hidden aspect-square flex items-center justify-center">
+              <div className="relative bg-slate-900 rounded-2xl overflow-hidden h-96 flex items-center justify-center">
                 {card.images?.large ? (
                   <img
                     src={card.images.large}

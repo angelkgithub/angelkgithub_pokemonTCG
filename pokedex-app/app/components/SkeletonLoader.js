@@ -14,28 +14,28 @@ export default function SkeletonLoader({ count = 15 }) {
       {Array.from({ length: count }).map((_, i) => (
         <div
           key={i}
-          className="group h-full rounded-2xl overflow-hidden bg-gradient-to-br from-slate-700 to-slate-900 shadow-lg"
+          className="group h-full rounded-2xl overflow-hidden bg-slate-800 shadow-lg border border-slate-700"
         >
           {/* Image Skeleton */}
           <div className="relative h-1/2 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 animate-pulse" />
 
           {/* Content Skeleton */}
-          <div className="p-4 flex flex-col gap-3 bg-slate-800/50">
+          <div className="p-4 flex flex-col gap-3 bg-slate-800">
             {/* Title Skeleton */}
             <div className="space-y-2">
-              <div className="h-4 bg-slate-600 rounded-lg animate-pulse w-3/4" />
-              <div className="h-3 bg-slate-600 rounded-lg animate-pulse w-1/2" />
+              <div className="h-4 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg animate-pulse w-3/4" />
+              <div className="h-3 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg animate-pulse w-1/2" />
             </div>
 
             {/* Info Skeleton */}
             <div className="space-y-2">
-              <div className="h-3 bg-slate-600 rounded-lg animate-pulse w-2/3" />
-              <div className="h-3 bg-slate-600 rounded-lg animate-pulse w-1/2" />
+              <div className="h-3 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg animate-pulse w-2/3" />
+              <div className="h-3 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg animate-pulse w-1/2" />
             </div>
 
             {/* Footer Skeleton */}
-            <div className="mt-auto pt-2 border-t border-slate-700/50">
-              <div className="h-3 bg-slate-600 rounded-lg animate-pulse w-2/3" />
+            <div className="mt-auto pt-2 border-t border-slate-700">
+              <div className="h-3 bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700 rounded-lg animate-pulse w-2/3" />
             </div>
           </div>
         </div>

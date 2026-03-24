@@ -41,8 +41,8 @@ export default function Pagination({
     <div className="mt-12 flex flex-col items-center gap-6">
       {/* Stats */}
       <div className="text-sm text-slate-400">
-        Page <span className="text-blue-400 font-semibold">{currentPage}</span> of{' '}
-        <span className="text-blue-400 font-semibold">{totalPages}</span>
+        Page <span className="text-red-400 font-semibold">{currentPage}</span> of{' '}
+        <span className="text-red-400 font-semibold">{totalPages}</span>
         {' '} • Showing{' '}
         <span className="text-slate-300 font-semibold">
           {(currentPage - 1) * cardsPerPage + 1}
@@ -61,7 +61,7 @@ export default function Pagination({
           className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
             currentPage === 1 || isDisabled
               ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed opacity-50'
-              : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:shadow-lg hover:shadow-blue-500/50 active:scale-95'
+              : 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:shadow-lg hover:shadow-red-500/50 active:scale-95'
           }`}
         >
           ← Previous
@@ -105,7 +105,7 @@ export default function Pagination({
           {/* Current Page */}
           <button
             disabled={true}
-            className="w-10 h-10 rounded-lg font-medium bg-gradient-to-r from-blue-500 to-purple-600 text-white"
+            className="w-10 h-10 rounded-lg font-medium bg-gradient-to-r from-blue-500 to-blue-600 text-white"
           >
             {currentPage}
           </button>
@@ -151,7 +151,7 @@ export default function Pagination({
           className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
             currentPage === totalPages || isDisabled
               ? 'bg-slate-700/50 text-slate-500 cursor-not-allowed opacity-50'
-              : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:shadow-lg hover:shadow-blue-500/50 active:scale-95'
+              : 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:shadow-lg hover:shadow-blue-500/50 active:scale-95'
           }`}
         >
           Next →

@@ -8,6 +8,7 @@ import CardItem from './CardItem';
 import CardModal from './CardModal';
 import SkeletonLoader from './SkeletonLoader';
 import Pagination from './Pagination';
+import TypeFilter from './TypeFilter';
 
 /**
  * CardGrid Component - Optimized with Pagination
@@ -47,15 +48,6 @@ export default function CardGrid() {
   const cards = data?.data || [];
   const totalCount = data?.totalCount || 0;
 
-  // Get unique types from current page (for filter options)
-  const uniqueTypes = useMemo(
-    () =>
-      Array.from(
-        new Set(cards?.flatMap((card) => card.types || []) || [])
-      ).sort(),
-    [cards]
-  );
-
   // Filter cards by type (client-side, only current page)
   const filteredCards = useMemo(
     () =>
@@ -70,15 +62,12 @@ export default function CardGrid() {
   // Handle page change
   const handlePageChange = (newPage) => {
     setPage(newPage);
-    // Reset type filter when changing pages (optional)
-    // setSelectedType('');
   };
 
   // Reset to page 1 when search changes
   const handleSearchChange = (newTerm) => {
     setSearchTerm(newTerm);
     setPage(1);
-    setSelectedType('');
   };
 
   // Loading State - Show skeleton loaders
@@ -89,22 +78,19 @@ export default function CardGrid() {
           {/* Header */}
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-              Pokémon{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                Cards
-              </span>
+              Pokémon Cards
             </h1>
-            <p className="text-slate-400">
+            <p className="text-gray-400">
               Browse and explore Pokémon trading cards from all sets
             </p>
           </div>
 
           {/* Search Bar Skeleton */}
           <div className="mb-8 space-y-4">
-            <div className="h-12 bg-slate-700 rounded-lg animate-pulse" />
+            <div className="h-12 bg-gray-200 rounded-lg animate-pulse" />
             <div className="flex gap-3">
-              <div className="h-10 bg-slate-700 rounded-lg animate-pulse flex-1 max-w-xs" />
-              <div className="h-10 bg-slate-700 rounded-lg animate-pulse flex-1 max-w-xs" />
+              <div className="h-10 bg-gray-200 rounded-lg animate-pulse flex-1 max-w-xs" />
+              <div className="h-10 bg-gray-200 rounded-lg animate-pulse flex-1 max-w-xs" />
             </div>
           </div>
 
@@ -124,7 +110,7 @@ export default function CardGrid() {
           <h2 className="text-2xl font-bold text-white mb-2">
             Error Loading Cards
           </h2>
-          <p className="text-slate-400">
+          <p className="text-gray-400">
             {error?.message || 'An error occurred while fetching cards.'}
           </p>
         </div>
@@ -138,24 +124,20 @@ export default function CardGrid() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
-            Pokémon{' '}
-            <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-              Cards
-            </span>
+            Pokémon Cards
           </h1>
-          <p className="text-slate-400">
+          <p className="text-gray-400">
             Browse and explore Pokémon trading cards from all sets
           </p>
         </div>
 
         {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-8 space-y-6">
           {/* Search Bar */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-lg blur opacity-0 group-focus-within:opacity-100 transition-opacity duration-300" />
-            <div className="relative flex items-center bg-slate-800/50 border border-slate-700/50 rounded-lg backdrop-blur-sm hover:border-slate-600/50 transition-colors duration-300">
+            <div className="relative flex items-center bg-slate-800 border border-slate-700 rounded-lg hover:border-slate-600 transition-colors duration-300">
               <svg
-                className="w-5 h-5 text-slate-400 ml-4 pointer-events-none"
+                className="w-5 h-5 text-slate-500 ml-4 pointer-events-none"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -177,7 +159,7 @@ export default function CardGrid() {
               {searchTerm && (
                 <button
                   onClick={() => handleSearchChange('')}
-                  className="mr-4 p-1 hover:bg-slate-700 rounded text-slate-400 hover:text-white transition-colors duration-200"
+                  className="mr-4 p-1 hover:bg-slate-700 rounded text-slate-500 hover:text-slate-400 transition-colors duration-200"
                   aria-label="Clear search"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -197,45 +179,19 @@ export default function CardGrid() {
             </div>
           </div>
 
-          {/* Type Filter */}
-          {uniqueTypes.length > 0 && (
-            <div className="flex gap-2 overflow-x-auto pb-2">
-              <button
-                onClick={() => setSelectedType('')}
-                className={`px-4 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 ${
-                  selectedType === ''
-                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                    : 'bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:border-slate-600/50 hover:text-white'
-                }`}
-              >
-                All Types
-              </button>
-              {uniqueTypes.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => setSelectedType(type)}
-                  className={`px-4 py-2 rounded-full font-medium whitespace-nowrap transition-all duration-300 ${
-                    selectedType === type
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white'
-                      : 'bg-slate-800/50 text-slate-300 border border-slate-700/50 hover:border-slate-600/50 hover:text-white'
-                  }`}
-                >
-                  {type}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Type Filter Component */}
+          <TypeFilter selectedType={selectedType} onTypeChange={setSelectedType} />
 
           {/* Results Info */}
           <div className="flex items-center justify-between">
-            <p className="text-sm text-slate-400">
-              Page <span className="text-blue-400 font-semibold">{page}</span> •
+            <p className="text-sm text-gray-700">
+              Page <span className="text-blue-600 font-semibold">{page}</span> •
               Showing{' '}
-              <span className="text-slate-300 font-semibold">
+              <span className="text-white font-semibold">
                 {filteredCards.length}
               </span>{' '}
               of{' '}
-              <span className="text-slate-300 font-semibold">
+              <span className="text-white font-semibold">
                 {totalCount}
               </span>{' '}
               cards
@@ -244,7 +200,7 @@ export default function CardGrid() {
             {/* Fetching indicator */}
             {isFetching && (
               <div className="flex items-center gap-2 text-xs text-slate-400">
-                <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" />
+                <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse" />
                 Fetching...
               </div>
             )}

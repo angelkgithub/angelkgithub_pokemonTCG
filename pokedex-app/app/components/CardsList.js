@@ -37,7 +37,6 @@ function CardsList() {
           <option value="Water">💧 Water</option>
           <option value="Grass">🌿 Grass</option>
           <option value="Electric">⚡ Electric</option>
-          <option value="Psychic">🧠 Psychic</option>
         </select>
       </div>
 
