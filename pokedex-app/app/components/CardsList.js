@@ -32,11 +32,6 @@ function CardsList() {
           onChange={(e) => setType(e.target.value)}
           className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <option value="">All Types</option>
-          <option value="Fire">🔥 Fire</option>
-          <option value="Water">💧 Water</option>
-          <option value="Grass">🌿 Grass</option>
-          <option value="Electric">⚡ Electric</option>
         </select>
       </div>
 

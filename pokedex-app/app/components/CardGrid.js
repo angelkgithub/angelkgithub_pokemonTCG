@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import Image from 'next/image';
 import { useGetCardsQuery, CARDS_PER_PAGE } from '../RTK/pokemonApi';
 import { useDebounce } from '../hooks/useDebounce';
 import { usePrefetchNextPage } from '../hooks/usePrefetchNextPage';
@@ -106,7 +107,15 @@ export default function CardGrid() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">⚠️</div>
+          <div className="mb-4 flex justify-center">
+            <Image
+              src="/Snorlax.png"
+              alt="Snorlax - Error"
+              width={120}
+              height={120}
+              className="object-contain"
+            />
+          </div>
           <h2 className="text-2xl font-bold text-white mb-2">
             Error Loading Cards
           </h2>
@@ -222,7 +231,15 @@ export default function CardGrid() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20">
-            <div className="text-6xl mb-4">🔍</div>
+            <div className="mb-4 flex justify-center">
+              <Image
+                src="/Snorlax.png"
+                alt="Snorlax - No Cards Found"
+                width={120}
+                height={120}
+                className="object-contain"
+              />
+            </div>
             <h2 className="text-2xl font-bold text-white mb-2">
               No Cards Found
             </h2>
